@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Parliament — Governance on BOT Chain</title>
+<link rel="icon" type="image/png" href="./logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0f172a;--panel:#1e293b;--panel-2:#334155;--accent:#8b5cf6;--accent-soft:#a78bfa;--against:#ef4444;--text:#f1f5f9;--muted:#94a3b8;--hairline:rgba(241,245,249,.12);--hairline-strong:rgba(241,245,249,.24)}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;line-height:1.55;min-height:100vh}
+a{color:inherit;text-decoration:none}
+.mono{font-family:'Courier New',monospace}
+.wrap{max-width:1160px;margin:0 auto;padding:0 24px}
+nav{border-bottom:1px solid var(--hairline)}
+.nav-inner{display:flex;align-items:center;justify-content:space-between;height:58px}
+.logo{display:flex;align-items:center;gap:10px;font-weight:700;font-size:17px}
+.logo-mark{width:20px;height:20px;background:linear-gradient(135deg,var(--accent),#6d28d9);border-radius:4px;transform:rotate(45deg)}
+.nav-links{display:flex;align-items:center;gap:24px;font-size:14px;color:var(--muted)}
+.nav-links a:hover{color:var(--accent-soft)}
+.btn{font-family:'DM Sans',sans-serif;font-weight:600;font-size:13px;padding:10px 18px;border-radius:4px;border:none;cursor:pointer;min-height:40px;transition:all .15s}
+.btn-primary{background:var(--accent);color:#fff}
+.btn-primary:hover{background:var(--accent-soft)}
+.btn-ghost{background:transparent;color:var(--text);border:1px solid var(--hairline-strong)}
+.btn-ghost:hover{border-color:var(--accent)}
+select#netSel{background:var(--panel);border:1px solid var(--hairline-strong);border-radius:4px;font-family:'Courier New',monospace;font-size:12px;padding:9px;min-height:40px;color:var(--text)}
+.masthead{border-top:4px solid var(--accent);border-bottom:1px solid var(--hairline-strong);padding:34px 0 20px;margin-bottom:8px}
+.masthead h1{font-size:clamp(34px,5vw,50px);font-weight:700;letter-spacing:-.02em;line-height:1.06;max-width:760px}
+.dateline{display:flex;flex-wrap:wrap;gap:18px;margin-top:16px;font-family:'Courier New',monospace;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.dateline b{color:var(--accent-soft);font-weight:400}
+.mast-stats{display:flex;gap:0;border-bottom:1px solid var(--hairline);margin-bottom:30px}
+.mast-stat{padding:14px 26px 14px 0;margin-right:26px;border-right:1px solid var(--hairline);display:flex;align-items:baseline;gap:10px}
+.mast-stat:last-child{border-right:none}
+.mast-stat .v{font-size:22px;font-weight:700;color:var(--accent-soft);font-family:'Courier New',monospace}
+.mast-stat .k{font-family:'Courier New',monospace;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.columns{display:grid;grid-template-columns:1.55fr 1fr;gap:34px;align-items:start;padding-bottom:50px}
+@media(max-width:880px){.columns{grid-template-columns:1fr}}
+.sec-label{display:flex;align-items:center;gap:14px;font-family:'Courier New',monospace;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--accent-soft);margin:6px 0 4px}
+.sec-label::after{content:"";flex:1;height:1px;background:var(--hairline)}
+.block{border:1px solid var(--hairline-strong);background:var(--panel);margin-bottom:26px}
+.block-head{display:flex;justify-content:space-between;align-items:center;padding:14px 18px;border-bottom:1px solid var(--hairline)}
+.block-head .idx{font-family:'Courier New',monospace;font-size:12px;color:var(--accent-soft);letter-spacing:.1em}
+.block-head h3{font-size:15px;font-weight:700}
+.block-body{padding:18px}
+.field{margin-bottom:14px}
+.field label{display:block;font-family:'Courier New',monospace;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
+.field input,.field textarea,.field select{width:100%;background:var(--bg);border:1px solid var(--hairline);border-radius:3px;color:var(--text);font-family:'Courier New',monospace;font-size:14px;padding:11px 13px;min-height:42px}
+.field textarea{min-height:84px;resize:vertical}
+.field input:focus,.field textarea:focus,.field select:focus{outline:2px solid var(--accent);outline-offset:0}
+.inline-2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.feed-empty{border:1px dashed var(--hairline-strong);padding:26px 18px;text-align:center;color:var(--muted);font-size:14px;margin-bottom:26px}
+.proposal-row{border-bottom:1px solid var(--hairline);padding:16px 18px}
+.proposal-row .top{display:flex;justify-content:space-between;gap:12px;align-items:baseline}
+.proposal-row .idx{font-family:'Courier New',monospace;color:var(--accent-soft);font-size:13px}
+.proposal-row h4{font-size:15px}
+.proposal-row p{font-size:13px;color:var(--muted);margin:6px 0 10px}
+.votebar{height:8px;border-radius:2px;background:var(--against);overflow:hidden;margin-bottom:8px}
+.votebar .for{height:100%;background:var(--accent);width:0%}
+.votes{display:flex;gap:14px;font-family:'Courier New',monospace;font-size:11px}
+.votes .for-n{color:var(--accent-soft)}
+.votes .ag-n{color:#fca5a5}
+.power-chip{display:inline-block;margin-top:12px;font-family:'Courier New',monospace;font-size:12px;background:var(--panel-2);border:1px solid var(--hairline-strong);border-radius:3px;padding:7px 12px;color:var(--accent-soft)}
+aside{position:sticky;top:20px}
+.side-card{border:1px solid var(--hairline-strong);background:var(--panel);margin-bottom:22px}
+.side-head{padding:13px 18px;border-bottom:1px solid var(--hairline);font-family:'Courier New',monospace;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--accent-soft)}
+.side-body{padding:18px}
+.treasury-num{font-size:38px;font-weight:700;font-family:'Courier New',monospace;color:var(--text);line-height:1}
+.treasury-cap{font-size:12px;color:var(--muted);margin-top:6px;margin-bottom:16px}
+.rule-row{display:flex;justify-content:space-between;padding:9px 0;border-top:1px solid var(--hairline);font-size:13px;color:var(--muted)}
+.rule-row b{color:var(--text);font-family:'Courier New',monospace;font-weight:400}
+footer{border-top:1px solid var(--hairline);padding:36px 0;color:var(--muted);font-size:13px}
+.proof{margin-top:20px;padding:16px 18px;background:var(--panel);border:1px solid var(--hairline-strong);max-width:380px}
+.proof-title{font-family:'Courier New',monospace;font-size:11px;font-weight:600;color:var(--accent-soft);letter-spacing:.12em;text-transform:uppercase;margin-bottom:12px}
+.proof-grid{display:grid;grid-template-columns:auto 1fr;gap:6px 16px;font-family:'Courier New',monospace;font-size:12px;color:var(--muted)}
+.proof-grid .val{color:var(--accent-soft);overflow-wrap:anywhere}
+.proof-link{display:inline-block;margin-top:10px;font-family:'Courier New',monospace;font-size:11px;color:var(--accent-soft);border-bottom:1px solid var(--accent)}
+</style>
+</head>
+<body>
+<nav><div class="wrap nav-inner">
+<div class="logo"><div class="logo-mark"></div>Parliament</div>
+<div class="nav-links">
+<a href="#proposals">Proposals</a>
+<a href="#treasury">Treasury</a>
+<select id="netSel"><option value="968">Testnet 968</option><option value="677">Mainnet 677</option></select>
+<button class="btn btn-primary" id="connectBtn">Connect wallet</button>
+</div>
+</div></nav>
+
+<div class="wrap">
+<div class="masthead">
+<h1>Vote on the future of BOT Chain.</h1>
+<div class="dateline">
+<span>Session · <b>open</b></span>
+<span>Voting period · <b>3 days</b></span>
+<span>Execution delay · <b>1 day</b></span>
+<span>Quorum · <b>100 votes</b></span>
+</div>
+</div>
+
+<div class="mast-stats">
+<div class="mast-stat"><span class="v" id="statProposals">—</span><span class="k">Proposals</span></div>
+<div class="mast-stat"><span class="v" id="statTreasury">—</span><span class="k">Treasury</span></div>
+<div class="mast-stat"><span class="v" id="statVoters">—</span><span class="k">Voters</span></div>
+</div>
+
+<div class="columns">
+<div>
+<div class="sec-label" id="proposals">The floor — active proposals</div>
+<div id="proposalList"><div class="feed-empty">No proposals yet — table the first one using the form below.</div></div>
+
+<div class="block">
+<div class="block-head"><span class="idx">01 —</span><h3>Table a proposal</h3></div>
+<div class="block-body">
+<div class="field"><label>Description — what should the community decide?</label><textarea id="propDesc" placeholder="Transfer 100 BOT to the development fund"></textarea></div>
+<div class="inline-2">
+<div class="field"><label>Target address</label><input id="propTarget" placeholder="0x..."></div>
+<div class="field"><label>Value (BOT)</label><input id="propValue" type="number" step="0.001" placeholder="0"></div>
+</div>
+<button class="btn btn-primary" id="createPropBtn" style="width:100%">Table proposal →</button>
+</div>
+</div>
+
+<div class="block">
+<div class="block-head"><span class="idx">02 —</span><h3>Cast your vote</h3></div>
+<div class="block-body">
+<div class="inline-2">
+<div class="field"><label>Proposal ID</label><input id="voteId" type="number" placeholder="0"></div>
+<div class="field"><label>Position</label><select id="voteChoice"><option value="true">For</option><option value="false">Against</option></select></div>
+</div>
+<button class="btn btn-primary" id="voteBtn" style="width:100%">Cast vote →</button>
+<div class="power-chip">Your voting power: <b id="yourPower">—</b></div>
+</div>
+</div>
+</div>
+
+<aside id="treasury">
+<div class="side-card">
+<div class="side-head">Treasury</div>
+<div class="side-body">
+<div class="treasury-num" id="treasuryBalance">—</div>
+<div class="treasury-cap">Community-controlled — withdrawals require a passed vote.</div>
+<div class="field"><label>Deposit amount (BOT)</label><input id="treasuryAmt" type="number" step="0.001" placeholder="10.000"></div>
+<button class="btn btn-primary" id="depositTreasuryBtn" style="width:100%">Deposit →</button>
+</div>
+</div>
+<div class="side-card">
+<div class="side-head">Standing orders</div>
+<div class="side-body">
+<div class="rule-row"><span>Quorum required</span><b>100 votes</b></div>
+<div class="rule-row"><span>Voting period</span><b>3 days</b></div>
+<div class="rule-row"><span>Execution delay</span><b>1 day</b></div>
+<div class="rule-row"><span>Veto</span><b>none</b></div>
+</div>
+</div>
+</aside>
+</div>
+</div>
+
+<footer>
+<div class="wrap">
+<p>Parliament — governance and treasury on BOT Chain. Vote, execute, manage.</p>
+<div class="proof">
+<div class="proof-title">Proof on BOT Mainnet</div>
+<div class="proof-grid">
+<span>Chain ID</span><span class="val">677</span>
+<span>Contract</span><span class="val" id="contractAddr">—</span>
+</div>
+<a href="https://botchain.ai" target="_blank" rel="noopener" class="proof-link">BOT Chain Website ↗</a>
+</div>
+</div>
+</footer>
+<script type="importmap">
+{"imports":{"ethers":"https://esm.sh/ethers@6.13.2","@reown/appkit":"https://esm.sh/@reown/appkit@1.8.21","@reown/appkit-adapter-ethers":"https://esm.sh/@reown/appkit-adapter-ethers@1.8.21"}}
+</script>
+<script type="module" src="app.js"></script>
+</body>
+</html>
