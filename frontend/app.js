@@ -24,7 +24,7 @@ const modal = createAppKit({
   networks: [botTestnet, botMainnet],
   defaultNetwork: botMainnet,
   projectId: PROJECT_ID,
-  metadata: { name: 'Parliament', description: 'Governance on BOT Chain', url: 'https://parliament.botchain.io', icons: ['https://parliament.botchain.io/logo.png'] },
+  metadata: { name: 'Parliament', description: 'Governance on BOT Chain', url: location.origin, icons: [location.origin + '/logo.png'] },
   themeVariables: { '--w3m-accent': '#8b5cf6' },
   features: { analytics: false },
 });
