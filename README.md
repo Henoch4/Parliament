@@ -8,7 +8,7 @@ Table proposals, vote with your WBOT balance, manage a community treasury.
 - Mainnet — chainId 677 — RPC https://rpc.botchain.ai — explorer https://scan.botchain.ai
 
 ## Deployments
-- Mainnet (677): pending — contract compiled (solc 0.8.30, OpenZeppelin 5.6.1, optimized), deploy queued.
+- Mainnet (677): **deployed** — `0xc9A638d50Af3C969E6E940C38d1cAa611863B327` (block 26069093, tx `0x07a2d89a62b6a33c21ab1e7c29db06bd12d7662328b6db3b35ca6d1a8424a833`, 20 gwei, gasUsed 1581001, 2026-10-09). Frontend wired and defaults to mainnet.
 - Constructor: WBOT `0xD5452816194a3784dBa983426cCe7c122F4abd30` (governance + treasury token).
 
 ## Rules
