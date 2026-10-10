@@ -1,182 +1,323 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Parliament — Governance on BOT Chain</title>
-<link rel="icon" type="image/png" href="./logo.png">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
-<style>
-:root{--bg:#0f172a;--panel:#1e293b;--panel-2:#334155;--accent:#8b5cf6;--accent-soft:#a78bfa;--against:#ef4444;--text:#f1f5f9;--muted:#94a3b8;--hairline:rgba(241,245,249,.12);--hairline-strong:rgba(241,245,249,.24)}
-*{box-sizing:border-box;margin:0;padding:0}
-body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;line-height:1.55;min-height:100vh}
-a{color:inherit;text-decoration:none}
-.mono{font-family:'Courier New',monospace}
-.wrap{max-width:1160px;margin:0 auto;padding:0 24px}
-nav{border-bottom:1px solid var(--hairline)}
-.nav-inner{display:flex;align-items:center;justify-content:space-between;height:58px}
-.logo{display:flex;align-items:center;gap:10px;font-weight:700;font-size:17px}
-.logo-mark{width:20px;height:20px;background:linear-gradient(135deg,var(--accent),#6d28d9);border-radius:4px;transform:rotate(45deg)}
-.nav-links{display:flex;align-items:center;gap:24px;font-size:14px;color:var(--muted)}
-.nav-links a:hover{color:var(--accent-soft)}
-.btn{font-family:'DM Sans',sans-serif;font-weight:600;font-size:13px;padding:10px 18px;border-radius:4px;border:none;cursor:pointer;min-height:40px;transition:all .15s}
-.btn-primary{background:var(--accent);color:#fff}
-.btn-primary:hover{background:var(--accent-soft)}
-.btn-ghost{background:transparent;color:var(--text);border:1px solid var(--hairline-strong)}
-.btn-ghost:hover{border-color:var(--accent)}
-select#netSel{background:var(--panel);border:1px solid var(--hairline-strong);border-radius:4px;font-family:'Courier New',monospace;font-size:12px;padding:9px;min-height:40px;color:var(--text)}
-.masthead{border-top:4px solid var(--accent);border-bottom:1px solid var(--hairline-strong);padding:34px 0 20px;margin-bottom:8px}
-.masthead h1{font-size:clamp(34px,5vw,50px);font-weight:700;letter-spacing:-.02em;line-height:1.06;max-width:760px}
-.dateline{display:flex;flex-wrap:wrap;gap:18px;margin-top:16px;font-family:'Courier New',monospace;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
-.dateline b{color:var(--accent-soft);font-weight:400}
-.mast-stats{display:flex;gap:0;border-bottom:1px solid var(--hairline);margin-bottom:30px}
-.mast-stat{padding:14px 26px 14px 0;margin-right:26px;border-right:1px solid var(--hairline);display:flex;align-items:baseline;gap:10px}
-.mast-stat:last-child{border-right:none}
-.mast-stat .v{font-size:22px;font-weight:700;color:var(--accent-soft);font-family:'Courier New',monospace}
-.mast-stat .k{font-family:'Courier New',monospace;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
-.columns{display:grid;grid-template-columns:1.55fr 1fr;gap:34px;align-items:start;padding-bottom:50px}
-@media(max-width:880px){.columns{grid-template-columns:1fr}}
-.sec-label{display:flex;align-items:center;gap:14px;font-family:'Courier New',monospace;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--accent-soft);margin:6px 0 4px}
-.sec-label::after{content:"";flex:1;height:1px;background:var(--hairline)}
-.block{border:1px solid var(--hairline-strong);background:var(--panel);margin-bottom:26px}
-.block-head{display:flex;justify-content:space-between;align-items:center;padding:14px 18px;border-bottom:1px solid var(--hairline)}
-.block-head .idx{font-family:'Courier New',monospace;font-size:12px;color:var(--accent-soft);letter-spacing:.1em}
-.block-head h3{font-size:15px;font-weight:700}
-.block-body{padding:18px}
-.field{margin-bottom:14px}
-.field label{display:block;font-family:'Courier New',monospace;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
-.field input,.field textarea,.field select{width:100%;background:var(--bg);border:1px solid var(--hairline);border-radius:3px;color:var(--text);font-family:'Courier New',monospace;font-size:14px;padding:11px 13px;min-height:42px}
-.field textarea{min-height:84px;resize:vertical}
-.field input:focus,.field textarea:focus,.field select:focus{outline:2px solid var(--accent);outline-offset:0}
-.inline-2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-.feed-empty{border:1px dashed var(--hairline-strong);padding:26px 18px;text-align:center;color:var(--muted);font-size:14px;margin-bottom:26px}
-.proposal-row{border-bottom:1px solid var(--hairline);padding:16px 18px}
-.proposal-row .top{display:flex;justify-content:space-between;gap:12px;align-items:baseline}
-.proposal-row .idx{font-family:'Courier New',monospace;color:var(--accent-soft);font-size:13px}
-.proposal-row h4{font-size:15px}
-.proposal-row p{font-size:13px;color:var(--muted);margin:6px 0 10px}
-.votebar{height:8px;border-radius:2px;background:var(--against);overflow:hidden;margin-bottom:8px}
-.votebar .for{height:100%;background:var(--accent);width:0%}
-.votes{display:flex;gap:14px;font-family:'Courier New',monospace;font-size:11px}
-.votes .for-n{color:var(--accent-soft)}
-.votes .ag-n{color:#fca5a5}
-.power-chip{display:inline-block;margin-top:12px;font-family:'Courier New',monospace;font-size:12px;background:var(--panel-2);border:1px solid var(--hairline-strong);border-radius:3px;padding:7px 12px;color:var(--accent-soft)}
-aside{position:sticky;top:20px}
-.side-card{border:1px solid var(--hairline-strong);background:var(--panel);margin-bottom:22px}
-.side-head{padding:13px 18px;border-bottom:1px solid var(--hairline);font-family:'Courier New',monospace;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--accent-soft)}
-.side-body{padding:18px}
-.treasury-num{font-size:38px;font-weight:700;font-family:'Courier New',monospace;color:var(--text);line-height:1}
-.treasury-cap{font-size:12px;color:var(--muted);margin-top:6px;margin-bottom:16px}
-.rule-row{display:flex;justify-content:space-between;padding:9px 0;border-top:1px solid var(--hairline);font-size:13px;color:var(--muted)}
-.rule-row b{color:var(--text);font-family:'Courier New',monospace;font-weight:400}
-footer{border-top:1px solid var(--hairline);padding:36px 0;color:var(--muted);font-size:13px}
-.proof{margin-top:20px;padding:16px 18px;background:var(--panel);border:1px solid var(--hairline-strong);max-width:380px}
-.proof-title{font-family:'Courier New',monospace;font-size:11px;font-weight:600;color:var(--accent-soft);letter-spacing:.12em;text-transform:uppercase;margin-bottom:12px}
-.proof-grid{display:grid;grid-template-columns:auto 1fr;gap:6px 16px;font-family:'Courier New',monospace;font-size:12px;color:var(--muted)}
-.proof-grid .val{color:var(--accent-soft);overflow-wrap:anywhere}
-.proof-link{display:inline-block;margin-top:10px;font-family:'Courier New',monospace;font-size:11px;color:var(--accent-soft);border-bottom:1px solid var(--accent)}
-</style>
-</head>
-<body>
-<nav><div class="wrap nav-inner">
-<div class="logo"><div class="logo-mark"></div>Parliament</div>
-<div class="nav-links">
-<a href="#proposals">Proposals</a>
-<a href="#treasury">Treasury</a>
-<select id="netSel"><option value="968">Testnet 968</option><option value="677" selected>Mainnet 677</option></select>
-<button class="btn btn-primary" id="connectBtn">Connect wallet</button>
-</div>
-</div></nav>
-
-<div class="wrap">
-<div class="masthead">
-<h1>Vote on the future of BOT Chain.</h1>
-<div class="dateline">
-<span>Session · <b>open</b></span>
-<span>Voting period · <b>3 days</b></span>
-<span>Execution delay · <b>1 day</b></span>
-<span>Quorum · <b>100 votes</b></span>
-</div>
-</div>
-
-<div class="mast-stats">
-<div class="mast-stat"><span class="v" id="statProposals">—</span><span class="k">Proposals</span></div>
-<div class="mast-stat"><span class="v" id="statTreasury">—</span><span class="k">Treasury</span></div>
-<div class="mast-stat"><span class="v" id="statVoters">—</span><span class="k">Voters</span></div>
-</div>
-
-<div class="columns">
-<div>
-<div class="sec-label" id="proposals">The floor — active proposals</div>
-<div id="proposalList"><div class="feed-empty">No proposals yet — table the first one using the form below.</div></div>
-
-<div class="block">
-<div class="block-head"><span class="idx">01 —</span><h3>Table a proposal</h3></div>
-<div class="block-body">
-<div class="field"><label>Description — what should the community decide?</label><textarea id="propDesc" placeholder="Transfer 100 BOT to the development fund"></textarea></div>
-<div class="inline-2">
-<div class="field"><label>Target address</label><input id="propTarget" placeholder="0x..."></div>
-<div class="field"><label>Value (BOT)</label><input id="propValue" type="number" step="0.001" placeholder="0"></div>
-</div>
-<button class="btn btn-primary" id="createPropBtn" style="width:100%">Table proposal →</button>
-</div>
-</div>
-
-<div class="block">
-<div class="block-head"><span class="idx">02 —</span><h3>Cast your vote</h3></div>
-<div class="block-body">
-<div class="inline-2">
-<div class="field"><label>Proposal ID</label><input id="voteId" type="number" placeholder="0"></div>
-<div class="field"><label>Position</label><select id="voteChoice"><option value="true">For</option><option value="false">Against</option></select></div>
-</div>
-<button class="btn btn-primary" id="voteBtn" style="width:100%">Cast vote →</button>
-<div class="power-chip">Your voting power: <b id="yourPower">—</b></div>
-</div>
-</div>
-</div>
-
-<aside id="treasury">
-<div class="side-card">
-<div class="side-head">Treasury</div>
-<div class="side-body">
-<div class="treasury-num" id="treasuryBalance">—</div>
-<div class="treasury-cap">Community-controlled — withdrawals require a passed vote.</div>
-<div class="field"><label>Deposit amount (BOT)</label><input id="treasuryAmt" type="number" step="0.001" placeholder="10.000"></div>
-<button class="btn btn-primary" id="depositTreasuryBtn" style="width:100%">Deposit →</button>
-</div>
-</div>
-<div class="side-card">
-<div class="side-head">Standing orders</div>
-<div class="side-body">
-<div class="rule-row"><span>Quorum required</span><b>100 votes</b></div>
-<div class="rule-row"><span>Voting period</span><b>3 days</b></div>
-<div class="rule-row"><span>Execution delay</span><b>1 day</b></div>
-<div class="rule-row"><span>Veto</span><b>none</b></div>
-</div>
-</div>
-</aside>
-</div>
-</div>
-
-<footer>
-<div class="wrap">
-<p>Parliament — governance and treasury on BOT Chain. Vote, execute, manage.</p>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>Parliament — Governance on BOT Chain</title><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,700;1,500&display=swap" rel="stylesheet"><link href="https://fonts.googleapis.com/css2?family=Libre+Franklin:wght@400;500;700&display=swap" rel="stylesheet"><style>:root{--bg:#f3eee2;--fg:#0c1426;--mut:#5a6272;--line:#cfc6ae;--card:#fbf8ef;--acc:#b4232a;--acc2:#7a5c14;--onacc:#f3eee2}@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0c1426;--fg:#f3eee2;--mut:#9aa3b5;--line:#243252;--card:#121c33;--acc:#e5484d;--acc2:#c9a24b;--onacc:#0c1426}}@media(prefers-color-scheme:light){:root:not([data-theme="dark"]){--bg:#f3eee2;--fg:#0c1426;--mut:#5a6272;--line:#cfc6ae;--card:#fbf8ef;--acc:#b4232a;--acc2:#7a5c14;--onacc:#f3eee2}}:root[data-theme="dark"]{--bg:#0c1426;--fg:#f3eee2;--mut:#9aa3b5;--line:#243252;--card:#121c33;--acc:#e5484d;--acc2:#c9a24b;--onacc:#0c1426}:root[data-theme="light"]{--bg:#f3eee2;--fg:#0c1426;--mut:#5a6272;--line:#cfc6ae;--card:#fbf8ef;--acc:#b4232a;--acc2:#7a5c14;--onacc:#f3eee2}*,*:before,*:after{box-sizing:border-box}:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-behavior:smooth;scroll-padding-top:calc(90px + env(safe-area-inset-top,0px))}body{margin:0;background:var(--bg);color:var(--fg);font-family:var(--sans);overflow-x:hidden;-webkit-font-smoothing:antialiased}a{color:inherit;text-decoration:none}button,input,select,textarea{font:inherit;color:inherit}.rv{opacity:0;transform:translateY(40px);transition:1s cubic-bezier(.2,.9,.2,1)}.rv.in{opacity:1;transform:none}.toast{position:fixed;left:50%;bottom:calc(24px + env(safe-area-inset-bottom,0px));translate:-50% 220%;background:var(--fg);color:var(--bg);padding:14px 24px;border-radius:99px;z-index:100;transition:translate .5s cubic-bezier(.2,.9,.2,1);font-size:14px;max-width:90vw;text-align:center}.toast.on{translate:-50% 0}@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.rv{opacity:1;transform:none}}
+:root{--serif:'Cormorant Garamond',Georgia,serif;--sans:'Libre Franklin',system-ui,sans-serif}
+.top{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:12px clamp(16px,4vw,56px);font-size:12px;letter-spacing:.14em;text-transform:uppercase;border-bottom:1px solid var(--line);color:var(--mut)}
+.top button{all:unset;cursor:pointer;border:1px solid var(--fg);color:var(--fg);padding:8px 16px}
+.mast{text-align:center;padding:36px 16px 0}.ed{font-style:italic;font-family:var(--serif);font-size:22px;color:var(--mut);margin:0}
+.mast h1{font-family:var(--serif);font-weight:700;font-size:clamp(56px,13vw,200px);line-height:.95;letter-spacing:.06em;margin:4px 0 14px}
+.dbl{border:0;border-top:4px double var(--fg);margin:0 clamp(16px,4vw,56px)}
+.mast nav{display:flex;justify-content:center;gap:clamp(16px,4vw,48px);padding:14px;font-size:12px;letter-spacing:.18em;text-transform:uppercase;border-bottom:1px solid var(--line)}
+.wrap{max-width:1280px;margin:0 auto;padding:0 clamp(16px,4vw,56px)}
+.chamber{display:grid;grid-template-columns:1fr 1.15fr;gap:40px;align-items:center;padding:56px 0 24px}
+.chamber h2{font-family:var(--serif);font-weight:500;font-size:clamp(44px,6vw,88px);line-height:1;margin:0 0 20px}
+.chamber p{font-size:18px;line-height:1.6;color:var(--mut);max-width:480px}
+.leg{display:flex;gap:22px;font-size:13px;letter-spacing:.1em;text-transform:uppercase;margin-top:20px}.leg i{display:inline-block;width:12px;height:12px;border-radius:50%;margin-right:8px;vertical-align:-1px}
+svg#hc{width:100%;height:auto}
+.so{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--fg);border-bottom:1px solid var(--fg);margin:48px 0}
+.so div{padding:28px 20px;border-right:1px solid var(--line);text-align:center}.so div:last-child{border:0}
+.so b{display:block;font-family:var(--serif);font-weight:700;font-size:clamp(44px,6vw,84px);line-height:1;color:var(--acc)}.so span{font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--mut)}
+h3.sec{font-family:var(--serif);font-weight:700;font-size:44px;margin:64px 0 8px}.sub{color:var(--mut);margin:0 0 28px}
+.prop{display:grid;grid-template-columns:70px 1fr 280px;gap:28px;padding:28px 0;border-top:1px solid var(--line);cursor:pointer;align-items:center}
+.prop.sel{background:linear-gradient(90deg,color-mix(in srgb,var(--acc2) 12%,transparent),transparent)}
+.prop .n{font-family:var(--serif);font-size:56px;font-style:italic;color:var(--acc2);line-height:1}
+.prop h4{font-family:var(--serif);font-size:30px;font-weight:700;margin:0 0 6px}.prop small{color:var(--mut);font-size:14px}
+.bar{height:10px;background:var(--line);display:flex;margin:14px 0 8px}.bar i{display:block;height:100%}
+.tl{display:flex;justify-content:space-between;font-size:13px;color:var(--mut)}
+.vb{display:flex;gap:8px;margin-top:12px}.vb button{all:unset;cursor:pointer;flex:1;text-align:center;padding:10px;border:1px solid var(--fg);font-size:12px;letter-spacing:.14em;text-transform:uppercase}
+.vb .f:hover{background:var(--acc2);color:var(--bg);border-color:var(--acc2)}.vb .a:hover{background:var(--acc);color:var(--onacc);border-color:var(--acc)}
+.chip{display:inline-block;font-size:11px;letter-spacing:.14em;text-transform:uppercase;border:1px solid var(--acc2);color:var(--acc2);padding:3px 10px;margin-left:10px;vertical-align:3px}
+.forms{display:grid;grid-template-columns:1.2fr .8fr;gap:48px}
+.fm{display:flex;flex-direction:column;gap:18px;border:1px solid var(--fg);padding:32px;background:var(--card)}
+.fm label{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--mut)}.fm input,.fm textarea{all:unset;display:block;width:100%;border-bottom:1px solid var(--fg);padding:10px 0;font-size:18px;margin-top:6px}.fm textarea{min-height:56px;white-space:pre-wrap}
+.go{all:unset;cursor:pointer;background:var(--fg);color:var(--bg);padding:16px 28px;text-align:center;font-size:13px;letter-spacing:.16em;text-transform:uppercase}.go:hover{background:var(--acc);color:var(--onacc)}
+.tr b{font-family:var(--serif);font-size:84px;font-weight:700;display:block;line-height:1}
+footer{margin-top:96px;border-top:4px double var(--fg);padding:32px clamp(16px,4vw,56px);display:flex;flex-wrap:wrap;justify-content:space-between;gap:16px;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--mut)}
+@media(max-width:900px){.chamber,.forms{grid-template-columns:1fr}.prop{grid-template-columns:50px 1fr}.prop>div:last-child{grid-column:1/-1}.so{grid-template-columns:1fr 1fr}.so div{border-bottom:1px solid var(--line)}}
+.top select{background:var(--card);border:1px solid var(--fg);color:var(--fg);padding:8px 12px;font-size:12px}
+#themeBtn{all:unset;cursor:pointer;border:1px solid var(--fg);color:var(--fg);padding:8px 14px;font-size:14px}
+.proof{margin-top:18px;padding:16px 18px;background:var(--card);border:1px solid var(--line);border-radius:12px;max-width:460px}
+.proof-title{font-size:11px;font-weight:700;color:var(--acc);letter-spacing:.12em;text-transform:uppercase;margin-bottom:12px}
+.proof-grid{display:grid;grid-template-columns:auto 1fr;gap:6px 16px;font-family:ui-monospace,monospace;font-size:12px;color:var(--mut)}
+.proof-grid .val{color:var(--acc);overflow-wrap:anywhere}
+.proof-links{display:flex;gap:14px;flex-wrap:wrap;margin-top:12px}
+.proof-link{font-size:11px;color:var(--acc);border-bottom:1px solid var(--acc);text-decoration:none}
+.wrap{max-width:1280px;margin:0 auto;padding:0 clamp(16px,4vw,56px)}
+</style></head><body>
+<div class="top"><span><a href="index.html">Home</a> · <a href="app.html">App</a> · <a href="docs.html">Docs</a></span><span id="dt"></span><select id="netSel"><option value="968">Testnet 968</option><option value="677" selected>Mainnet 677</option></select><button id="themeBtn" title="Theme">☀</button><button id="connectBtn">Connect wallet</button></div>
+<header class="mast"><p class="ed">The BOT Chain House of</p><h1>PARLIAMENT</h1><hr class="dbl"><nav><a href="#floor">The Floor</a><a href="#order">Order Paper</a><a href="#table">Table a Proposal</a><a href="#orders">Standing Orders</a><a href="app.html">Open app →</a><a href="docs.html">Docs</a></nav></header>
+<main class="wrap">
+<section class="chamber" id="floor"><div><h2>Vote on the future of BOT Chain.</h2><p>Governance and treasury, on-chain. Every proposal is tabled, voted and executed in public, under rules that never change mid-session.</p><div class="leg"><span><i style="background:var(--acc2)"></i>For</span><span><i style="background:var(--acc)"></i>Against</span><span><i style="background:var(--line)"></i>Not voted</span></div></div>
+<svg id="hc" viewBox="0 0 640 350" aria-label="Chamber seating chart"></svg></section>
+<div class="so rv" id="orders"><div><b>3 days</b><span>Voting period</span></div><div><b>1 day</b><span>Execution delay</span></div><div><b>100</b><span>Votes for quorum</span></div><div><b>None</b><span>Veto</span></div></div>
+<h3 class="sec" id="order">Order Paper</h3><p class="sub">Select a proposal to seat the chamber. Cast your vote For or Against.</p><div id="list"></div>
+<div class="forms" id="table"><div><h3 class="sec" style="margin-top:56px">Table a proposal</h3><p class="sub">Describe it, name a target address and the BOT value to release from the treasury.</p>
+<div class="fm"><label>Description<textarea id="pd" placeholder="Fund community hackathon"></textarea></label><label>Target address<input id="pt" placeholder="0x…"></label><label>Value (BOT)<input id="pv" inputmode="decimal" placeholder="0"></label><button class="go" id="tb">Table proposal →</button></div></div>
+<div class="tr"><h3 class="sec" style="margin-top:56px">Treasury</h3><p class="sub">Community-controlled. Funds move only after a passed vote.</p><b id="tv">—</b><span class="sub">in treasury (live)</span><div class="fm" style="margin-top:24px"><label>Deposit (BOT)<input id="dv" inputmode="decimal" placeholder="0"></label><button class="go" id="db">Deposit →</button></div></div></div>
+</main><footer><div class="wrap">
+<p style="margin-bottom:2px">Parliament — governance and treasury on BOT Chain. Live on mainnet; real votes with real weight.</p>
 <div class="proof">
 <div class="proof-title">Proof on BOT Mainnet</div>
 <div class="proof-grid">
 <span>Chain ID</span><span class="val">677</span>
-<span>Contract</span><span class="val" id="contractAddr">0xc9A638d50Af3C969E6E940C38d1cAa611863B327</span>
+<span>Contract</span><span class="val">0xc9A638d50Af3C969E6E940C38d1cAa611863B327</span>
 </div>
-<a href="https://botchain.ai" target="_blank" rel="noopener" class="proof-link">BOT Chain Website ↗</a>
-<a href="https://scan.botchain.ai/" target="_blank" rel="noopener" class="proof-link" style="margin-left:14px">BOTScan Explorer ↗</a>
+<div class="proof-links">
+<a href="https://botchain.ai" target="_blank" rel="noopener" class="proof-link">BOT Chain Website &#8599;</a>
+<a href="https://scan.botchain.ai/" target="_blank" rel="noopener" class="proof-link">BOTScan Explorer &#8599;</a>
 </div>
 </div>
-</footer>
-<script type="importmap">
+<p style="margin-top:14px"><a href="index.html">Home</a> · <a href="app.html">Open the app →</a> · <a href="docs.html">Docs</a></p>
+</div></footer>
+<div class="toast" id="toast"></div><script type="importmap">
 {"imports":{"ethers":"https://esm.sh/ethers@6.13.2","@reown/appkit":"https://esm.sh/@reown/appkit@1.8.21","@reown/appkit-adapter-ethers":"https://esm.sh/@reown/appkit-adapter-ethers@1.8.21"}}
 </script>
-<script type="module" src="app.js"></script>
-</body>
-</html>
+<script type="module">
+import { ethers } from 'ethers';
+import { AppKit } from '@reown/appkit';
+import { EthersAdapter } from '@reown/appkit-adapter-ethers';
+
+const $ = (s) => document.querySelector(s);
+const $$ = (s) => [...document.querySelectorAll(s)];
+const fmt = (n, d = 0) => Number(n).toLocaleString("en-US", { minimumFractionDigits: d, maximumFractionDigits: d });
+const fmtE = (n, d = 18) => Number(ethers.formatUnits(n, d)).toLocaleString(undefined, { maximumFractionDigits: 4 });
+let _t;
+function toast(m) { const t = $("#toast"); t.textContent = m; t.classList.add("on"); clearTimeout(_t); _t = setTimeout(() => t.classList.remove("on"), 2600); }
+const io = new IntersectionObserver((es) => es.forEach((e) => { if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); } }), { threshold: .08 });
+$$(".rv").forEach((e) => io.observe(e));
+
+// theme toggle
+(function themeInit() {
+  const saved = localStorage.getItem("botchain-theme");
+  if (saved) document.documentElement.dataset.theme = saved;
+  const b = $("#themeBtn");
+  const paint = () => { if (b) b.textContent = document.documentElement.dataset.theme === "light" ? "☾" : "☀"; };
+  paint();
+  if (b) b.addEventListener("click", () => {
+    const nxt = document.documentElement.dataset.theme === "light" ? "dark" : "light";
+    document.documentElement.dataset.theme = nxt;
+    localStorage.setItem("botchain-theme", nxt);
+    paint();
+  });
+})();
+
+const PROJECT_ID = 'f018499b1e4a94d961ab67aeeeff3254';
+const NETS = {
+  968: { id: 968, name: 'BOT Chain Testnet', nativeCurrency: { name: 'BOT', symbol: 'BOT', decimals: 18 }, rpcUrls: { default: { http: ['https://rpc.bohr.life'] } }, blockExplorers: { default: { name: 'BOTScan Testnet', url: 'https://scan.bohr.life' } }, testnet: true },
+  677: { id: 677, name: 'BOT Chain', nativeCurrency: { name: 'BOT', symbol: 'BOT', decimals: 18 }, rpcUrls: { default: { http: ['https://rpc.botchain.ai'] } }, blockExplorers: { default: { name: 'BOTScan', url: 'https://scan.botchain.ai' } } },
+};
+const CHAINS = {
+  968: null, // Parliament lives on mainnet only
+  677: { parl: '0xc9A638d50Af3C969E6E940C38d1cAa611863B327' },
+};
+const PARL_ABI = [
+  'function proposalCount() view returns (uint256)',
+  'function getProposal(uint256) view returns (tuple(address proposer,string description,address target,uint256 value,bytes callData,uint256 forVotes,uint256 againstVotes,uint256 startTime,uint256 eta,bool executed,bool canceled))',
+  'function hasVoted(uint256,address) view returns (bool)',
+  'function createProposal(string,address,uint256,bytes)',
+  'function castVote(uint256,bool)',
+  'function executeProposal(uint256)',
+  'function depositTreasury(uint256)',
+  'function treasuryToken() view returns (address)',
+];
+const ERC20_ABI = [
+  'function balanceOf(address) view returns (uint256)',
+  'function approve(address,uint256) returns (bool)',
+  'function allowance(address,address) view returns (uint256)',
+];
+const GAS = { gasPrice: ethers.parseUnits('20', 'gwei') };
+const QUORUM = 100n;
+const NS = 144;
+
+let currentChainId = 677;
+let account = null;
+let appkit = null;
+let proposals = [];
+let sel = 0;
+
+function rpc() { return new ethers.JsonRpcProvider(currentChainId === 677 ? 'https://rpc.botchain.ai' : 'https://rpc.bohr.life'); }
+function contracts() {
+  const c = CHAINS[currentChainId];
+  if (!c) return null;
+  return new ethers.Contract(c.parl, PARL_ABI, rpc());
+}
+const short = (a) => (a ? a.slice(0, 6) + '…' + a.slice(-4) : '—');
+const esc = (s) => { const d = document.createElement('div'); d.textContent = s; return d.innerHTML; };
+
+function initAppKit() {
+  const adapter = new EthersAdapter();
+  appkit = new AppKit({
+    networks: [NETS[968], NETS[677]], adapters: [adapter], projectId: PROJECT_ID, themeMode: 'dark',
+    metadata: { name: 'Parliament', description: 'Governance on BOT Chain', url: location.origin, icons: [] },
+  });
+  appkit.subscribeAccount((s) => {
+    account = s.address || null;
+    const b = $("#connectBtn");
+    if (b) b.textContent = account ? short(account) : 'Connect wallet';
+    refresh();
+  });
+  const cb = $("#connectBtn");
+  if (cb) cb.addEventListener("click", () => appkit.open());
+  const ns = $("#netSel");
+  if (ns) ns.addEventListener("change", (e) => { currentChainId = Number(e.target.value); refresh(); });
+}
+
+// chamber seats (144, hemispheric arcs)
+const svg = $("#hc");
+let seats = [];
+if (svg) {
+  for (let r = 0; r < 6; r++) {
+    const n = 14 + r * 4, rad = 140 + r * 34;
+    for (let i = 0; i < n; i++) { const a = Math.PI - (i / (n - 1)) * Math.PI; seats.push({ x: 320 + rad * Math.cos(a), y: 330 - rad * Math.sin(a), a }); }
+  }
+  seats.sort((p, q) => q.a - p.a);
+  svg.innerHTML = seats.map((s, i) => `<circle id="s${i}" cx="${s.x.toFixed(1)}" cy="${s.y.toFixed(1)}" r="9" fill="var(--line)" style="transition:fill .6s ${(i % 24) * 25}ms"/>`).join("") + '<text x="320" y="318" text-anchor="middle" font-family="Cormorant Garamond,serif" font-size="30" font-weight="700" fill="var(--fg)" id="hct">—</text>';
+}
+function tok(v) { return getComputedStyle(document.documentElement).getPropertyValue(v).trim(); }
+function seat() {
+  if (!svg || !proposals.length) return;
+  const p = proposals[sel] || proposals[0];
+  const total = p.forVotes + p.againstVotes;
+  const F = total > 0n ? Number((p.forVotes * BigInt(NS)) / total) : 0;
+  const A = total > 0n ? Number((p.againstVotes * BigInt(NS)) / total) : 0;
+  seats.forEach((s, i) => {
+    const el = $("#s" + i);
+    if (el) el.setAttribute("fill", i < F ? tok("--acc2") : i >= NS - A ? tok("--acc") : tok("--line"));
+  });
+  const hct = $("#hct");
+  if (hct) hct.textContent = "Proposal #" + (Number(p.id) + 1);
+}
+
+function statusOf(p) {
+  const t = p.forVotes + p.againstVotes;
+  if (p.executed) return ["Executed", ""];
+  if (p.canceled) return ["Canceled", ""];
+  if (t < QUORUM) return ["Voting", "Quorum " + t + "/100"];
+  return p.forVotes > p.againstVotes ? ["Passed", "Executes 1 day after vote ends"] : ["Rejected", "Quorum met"];
+}
+
+async function refresh() {
+  const c = contracts();
+  const list = $("#list");
+  if (!c) {
+    if (list) list.innerHTML = '<div class="prop"><div></div><div><h4>Parliament lives on BOT Mainnet</h4><small>Switch the network to 677 to read live proposals.</small></div><div></div></div>';
+    const hct = $("#hct");
+    if (hct) hct.textContent = "—";
+    return;
+  }
+  try {
+    const count = Number(await c.proposalCount());
+    proposals = [];
+    for (let i = 0; i < count; i++) {
+      const p = await c.getProposal(i);
+      proposals.push({
+        id: i, proposer: p[0], description: p[1], target: p[2], value: p[3],
+        forVotes: p[5], againstVotes: p[6], startTime: Number(p[7]),
+        executed: p[9], canceled: p[10],
+      });
+    }
+    if (sel >= proposals.length) sel = Math.max(0, proposals.length - 1);
+    renderList();
+    // treasury: real token balance
+    try {
+      const tt = await c.treasuryToken();
+      const tok = new ethers.Contract(tt, ERC20_ABI, rpc());
+      const bal = await tok.balanceOf(CHAINS[currentChainId].parl);
+      const tv = $("#tv");
+      if (tv) tv.textContent = fmt(Number(ethers.formatEther(bal)), 4);
+    } catch { /* treasury display optional */ }
+    seat();
+  } catch (e) { console.error(e); }
+}
+
+function renderList() {
+  const list = $("#list");
+  if (!list) return;
+  if (!proposals.length) {
+    list.innerHTML = '<div class="prop"><div></div><div><h4>No proposals yet</h4><small>Table the first one below.</small></div><div></div></div>';
+    return;
+  }
+  list.innerHTML = proposals.map((p, i) => {
+    const t = p.forVotes + p.againstVotes;
+    const fpct = t > 0n ? Number((p.forVotes * 10000n) / t) / 100 : 0;
+    const apct = t > 0n ? 100 - fpct : 0;
+    const s = statusOf(p);
+    const canExec = s[0] === "Passed" && !p.executed;
+    return `<div class="prop ${i === sel ? "sel" : ""}" data-i="${i}"><div class="n">${i + 1}</div><div><h4>${esc(p.description)}<span class="chip">${s[0]}</span></h4><small>${fmtE(p.value)} BOT · ${s[1]} · by ${short(p.proposer)}</small></div><div><div class="bar"><i style="width:${fpct}%;background:var(--acc2)"></i><i style="width:${apct}%;background:var(--acc)"></i></div><div class="tl"><span>For ${fmtE(p.forVotes)}</span><span>Against ${fmtE(p.againstVotes)}</span></div><div class="vb"><button class="f" data-v="f">For</button><button class="a" data-v="a">Against</button>${canExec ? '<button class="f" data-v="x">Execute</button>' : ''}</div></div></div>`;
+  }).join("");
+  seat();
+}
+
+if ($("#list")) $("#list").addEventListener("click", async (e) => {
+  const r = e.target.closest(".prop");
+  if (!r) return;
+  sel = +r.dataset.i;
+  const b = e.target.closest("button");
+  renderList();
+  if (!b) return;
+  if (!account) { appkit.open(); return; }
+  try {
+    const c = CHAINS[currentChainId];
+    const s = await appkit.getSigner();
+    const p = new ethers.Contract(c.parl, PARL_ABI, s);
+    if (b.dataset.v === "x") {
+      await (await p.executeProposal(sel, GAS)).wait();
+      toast("Executed proposal #" + (sel + 1));
+    } else {
+      await (await p.castVote(sel, b.dataset.v === "f", GAS)).wait();
+      toast("Vote recorded: " + (b.dataset.v === "f" ? "For" : "Against"));
+    }
+    refresh();
+  } catch (err) { toast(String(err.shortMessage || err.reason || err.message || "failed").slice(0, 90)); }
+});
+
+const tb = $("#tb");
+if (tb) tb.addEventListener("click", async () => {
+  const desc = $("#pd").value.trim();
+  const target = $("#pt").value.trim();
+  let value = 0n;
+  try { value = ethers.parseEther($("#pv").value.trim() || "0"); } catch { return toast("Bad value"); }
+  if (!desc) return toast("Add a description");
+  if (!/^0x[0-9a-fA-F]{40}$/.test(target)) return toast("Target must be a 0x address");
+  if (!account) { appkit.open(); return; }
+  try {
+    const c = CHAINS[currentChainId];
+    const s = await appkit.getSigner();
+    const p = new ethers.Contract(c.parl, PARL_ABI, s);
+    await (await p.createProposal(desc, target, value, "0x", GAS)).wait();
+    $("#pd").value = $("#pt").value = $("#pv").value = "";
+    sel = proposals.length;
+    toast("Proposal tabled. The 3-day voting period begins.");
+    refresh();
+  } catch (err) { toast(String(err.shortMessage || err.reason || err.message || "failed").slice(0, 90)); }
+});
+
+const db = $("#db");
+if (db) db.addEventListener("click", async () => {
+  const v = +$("#dv").value;
+  if (!(v > 0)) return toast("Enter an amount");
+  if (!account) { appkit.open(); return; }
+  try {
+    const c = CHAINS[currentChainId];
+    const s = await appkit.getSigner();
+    const me = await s.getAddress();
+    const p = new ethers.Contract(c.parl, PARL_ABI, s);
+    const tt = await p.treasuryToken();
+    const tok = new ethers.Contract(tt, ERC20_ABI, s);
+    const amt = ethers.parseEther(String(v));
+    if ((await tok.allowance(me, c.parl)) < amt) {
+      toast("Approving…");
+      await (await tok.approve(c.parl, ethers.MaxUint256, GAS)).wait();
+    }
+    await (await p.depositTreasury(amt, GAS)).wait();
+    $("#dv").value = "";
+    toast("Deposited " + fmt(v) + " to the treasury.");
+    refresh();
+  } catch (err) { toast(String(err.shortMessage || err.reason || err.message || "failed").slice(0, 90)); }
+});
+
+const dt = $("#dt");
+if (dt) dt.textContent = new Date().toLocaleDateString("en-US", { weekday: "long", year: "numeric", month: "long", day: "numeric" });
+
+initAppKit();
+refresh();
+
+</script></body></html>
