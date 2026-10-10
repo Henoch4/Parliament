@@ -1,0 +1,86 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>Parliament Docs — Proposals, votes, treasury</title><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,700;1,500&display=swap" rel="stylesheet"><link href="https://fonts.googleapis.com/css2?family=Libre+Franklin:wght@400;500;700&display=swap" rel="stylesheet"><style>:root{--bg:#f3eee2;--fg:#0c1426;--mut:#5a6272;--line:#cfc6ae;--card:#fbf8ef;--acc:#b4232a;--acc2:#7a5c14;--onacc:#f3eee2}@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0c1426;--fg:#f3eee2;--mut:#9aa3b5;--line:#243252;--card:#121c33;--acc:#e5484d;--acc2:#c9a24b;--onacc:#0c1426}}@media(prefers-color-scheme:light){:root:not([data-theme="dark"]){--bg:#f3eee2;--fg:#0c1426;--mut:#5a6272;--line:#cfc6ae;--card:#fbf8ef;--acc:#b4232a;--acc2:#7a5c14;--onacc:#f3eee2}}:root[data-theme="dark"]{--bg:#0c1426;--fg:#f3eee2;--mut:#9aa3b5;--line:#243252;--card:#121c33;--acc:#e5484d;--acc2:#c9a24b;--onacc:#0c1426}:root[data-theme="light"]{--bg:#f3eee2;--fg:#0c1426;--mut:#5a6272;--line:#cfc6ae;--card:#fbf8ef;--acc:#b4232a;--acc2:#7a5c14;--onacc:#f3eee2}*,*:before,*:after{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--fg);font-family:'Libre Franklin',system-ui,sans-serif;overflow-x:hidden;-webkit-font-smoothing:antialiased}a{color:inherit;text-decoration:none}
+:root{--serif:'Cormorant Garamond',Georgia,serif}
+.top{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:12px clamp(16px,4vw,56px);font-size:12px;letter-spacing:.14em;text-transform:uppercase;border-bottom:1px solid var(--line);color:var(--mut)}
+.top button{all:unset;cursor:pointer;border:1px solid var(--fg);color:var(--fg);padding:8px 16px}
+.wrap{max-width:1000px;margin:0 auto;padding:0 clamp(16px,4vw,56px)}
+.mast{text-align:center;padding:36px 16px 0}.mast h1{font-family:var(--serif);font-weight:700;font-size:clamp(44px,8vw,110px);line-height:.95;letter-spacing:.06em;margin:4px 0 14px}
+.dbl{border:0;border-top:4px double var(--fg);margin:0 clamp(16px,4vw,56px)}
+h2.sec{font-family:var(--serif);font-weight:700;font-size:40px;margin:56px 0 8px}.sub{color:var(--mut);margin:0 0 24px;line-height:1.6}
+.kv{background:var(--card);border:1px solid var(--line);padding:20px 22px;display:grid;grid-template-columns:150px 1fr;gap:10px 18px;font-size:14px;margin:14px 0}
+.kv .k{color:var(--mut)}.kv .v{overflow-wrap:anywhere}
+table{width:100%;border-collapse:collapse;margin:14px 0;font-size:13.5px}
+th{text-align:left;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--mut);padding:10px 8px;border-bottom:2px solid var(--fg)}
+td{padding:10px 8px;border-bottom:1px solid var(--line);vertical-align:top}
+.mono{font-family:ui-monospace,monospace}
+a.tx{color:var(--acc)}
+footer{margin-top:80px;border-top:4px double var(--fg);padding:32px clamp(16px,4vw,56px);display:flex;flex-wrap:wrap;justify-content:space-between;gap:16px;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--mut)}
+.proof{margin-top:18px;padding:16px 18px;background:var(--card);border:1px solid var(--line);max-width:460px}
+.proof-title{font-size:11px;font-weight:700;color:var(--acc);letter-spacing:.12em;text-transform:uppercase;margin-bottom:12px}
+.proof-grid{display:grid;grid-template-columns:auto 1fr;gap:6px 16px;font-family:ui-monospace,monospace;font-size:12px;color:var(--mut)}
+.proof-grid .val{color:var(--acc);overflow-wrap:anywhere}
+.proof-links{display:flex;gap:14px;flex-wrap:wrap;margin-top:12px}
+.proof-link{font-size:11px;color:var(--acc);border-bottom:1px solid var(--acc);text-decoration:none}
+@media(max-width:700px){.kv{grid-template-columns:1fr}}
+</style></head><body>
+<div class="top"><span><a href="index.html">← Parliament home</a></span><span>BOT Chain Mainnet · 677</span><button id="themeBtn" title="Theme">☀</button></div>
+<header class="mast"><h1>PARLIAMENT</h1><hr class="dbl"></header>
+<main class="wrap">
+<h2 class="sec">Deployment</h2>
+<p class="sub">Parliament — governance and treasury on BOT Chain mainnet (chain 677).</p>
+<div class="kv">
+<div class="k">Chain</div><div class="v">BOT Chain Mainnet · chainId 677 · RPC https://rpc.botchain.ai · explorer https://scan.botchain.ai</div>
+<div class="k">Parliament</div><div class="v"><a class="tx" href="https://scan.botchain.ai/address/0xc9A638d50Af3C969E6E940C38d1cAa611863B327" target="_blank" rel="noopener">0xc9A638d50Af3C969E6E940C38d1cAa611863B327</a> · verified ✓</div>
+<div class="k">Treasury token</div><div class="v">WBOT <a class="tx" href="https://scan.botchain.ai/address/0xD5452816194a3784dBa983426cCe7c122F4abd30" target="_blank" rel="noopener">0xD5452816194a3784dBa983426cCe7c122F4abd30</a></div>
+<div class="k">Rules</div><div class="v">3-day voting period · 1-day execution delay · 100 votes quorum · no veto</div>
+<div class="k">Compiler</div><div class="v">solc 0.8.30 · optimizer 200 runs · cancun EVM · flattened-code verification</div>
+</div>
+
+<h2 class="sec">Contract API</h2>
+<table>
+<tr><th>Method</th><th>Signature</th><th>Notes</th></tr>
+<tr><td class="mono">proposalCount</td><td class="mono">() → uint256</td><td>Total proposals tabled</td></tr>
+<tr><td class="mono">getProposal</td><td class="mono">(uint256) → full struct</td><td>Proposer, description, target, value, for/against votes, timestamps, executed, canceled</td></tr>
+<tr><td class="mono">createProposal</td><td class="mono">(string, address, uint256, bytes)</td><td>Table a proposal with treasury release parameters</td></tr>
+<tr><td class="mono">castVote</td><td class="mono">(uint256, bool)</td><td>Vote For or Against an open proposal</td></tr>
+<tr><td class="mono">executeProposal</td><td class="mono">(uint256)</td><td>Executes passed proposals after the delay</td></tr>
+<tr><td class="mono">depositTreasury</td><td class="mono">(uint256)</td><td>Fund the community treasury (WBOT)</td></tr>
+<tr><td class="mono">hasVoted</td><td class="mono">(uint256, address) → bool</td><td>Whether an address voted</td></tr>
+</table>
+
+<h2 class="sec">Demo activity</h2>
+<p class="sub">Six mainnet demo transactions — all status ok, all methods decode by name on BOTScan:</p>
+<table>
+<tr><th>#</th><th>Method</th><th>Actor</th><th>Description</th><th>Tx</th></tr>
+<tr><td>1</td><td class="mono">createProposal</td><td>Wallet A</td><td>Tables the demo proposal</td><td class="mono"><a class="tx" href="https://scan.botchain.ai/tx/0x43537c111fa559a8d1d8ed2584f1b3b84691a94dd6492bcd590c5ae2f2fdbcc5" target="_blank" rel="noopener">0x43537c11…dbcc5</a></td></tr>
+<tr><td>2</td><td class="mono">castVote</td><td>Wallet A</td><td>First vote recorded</td><td class="mono"><a class="tx" href="https://scan.botchain.ai/tx/0x07267e485e176cb0416c3763c7a6cab653ba3c971c82c362f7619f7c3b7ca6cc" target="_blank" rel="noopener">0x07267e48…a6cc</a></td></tr>
+<tr><td>3</td><td class="mono">castVote</td><td>Wallet B</td><td>Second wallet votes</td><td class="mono"><a class="tx" href="https://scan.botchain.ai/tx/0x8decb97bfd89c9817e7b3360bca5966f9d9d63c8ef0d46b99a4d38291b8574e6" target="_blank" rel="noopener">0x8decb97b…574e6</a></td></tr>
+<tr><td>4</td><td class="mono">syncVotingPower</td><td>Wallet C</td><td>Voting power synced</td><td class="mono"><a class="tx" href="https://scan.botchain.ai/tx/0xf202b1640300ec837c5fa77f6789e0c3e346e55de28978fda76a8564289030d4" target="_blank" rel="noopener">0xf202b164…30d4</a></td></tr>
+<tr><td>5</td><td class="mono">depositTreasury</td><td>Wallet B</td><td>0.01 WBOT into the community treasury</td><td class="mono"><a class="tx" href="https://scan.botchain.ai/tx/0xd6eb82dea48bd7e047ba1005cf6a5108750cf73370619e7ba2852c6704d3f0fa" target="_blank" rel="noopener">0xd6eb82de…3f0fa</a></td></tr>
+<tr><td>6</td><td class="mono">castVote</td><td>Wallet C</td><td>Third wallet votes</td><td class="mono"><a class="tx" href="https://scan.botchain.ai/tx/0x51691e4ab338f6e54415cabe93102ddfda3fe598c3de2bd0df1788ead56eb7e5" target="_blank" rel="noopener">0x51691e4a…b7e5</a></td></tr>
+</table>
+<p class="sub">The contract carries 7 mainnet explorer transactions: 1 deploy + 6 demo across three wallets.</p>
+
+<h2 class="sec">Build & verify</h2>
+<p class="sub">Compiled with solc 0.8.30 (optimizer 200 runs, cancun EVM, no metadata hash); verified on BOTScan via flattened source. Full source: <span class="mono">contracts/Parliament.sol</span> in the repo.</p>
+</main>
+<footer><div class="wrap">
+<p style="margin-bottom:2px">Parliament — governance and treasury on BOT Chain. Live on mainnet; real votes with real weight.</p>
+<div class="proof">
+<div class="proof-title">Proof on BOT Mainnet</div>
+<div class="proof-grid">
+<span>Chain ID</span><span class="val">677</span>
+<span>Contract</span><span class="val">0xc9A638d50Af3C969E6E940C38d1cAa611863B327</span>
+</div>
+<div class="proof-links">
+<a href="https://botchain.ai" target="_blank" rel="noopener" class="proof-link">BOT Chain Website &#8599;</a>
+<a href="https://scan.botchain.ai/" target="_blank" rel="noopener" class="proof-link">BOTScan Explorer &#8599;</a>
+</div>
+</div>
+<p style="margin-top:14px"><a href="index.html">← Back to Parliament home</a></p>
+</div></footer>
+<script>
+(function(){try{var s=localStorage.getItem('botchain-theme');if(s)document.documentElement.dataset.theme=s;}catch(e){}
+var b=document.getElementById('themeBtn');var paint=function(){if(b)b.textContent=document.documentElement.dataset.theme==='light'?'☾':'☀';};paint();
+if(b)b.addEventListener('click',function(){var n=document.documentElement.dataset.theme==='light'?'dark':'light';document.documentElement.dataset.theme=n;try{localStorage.setItem('botchain-theme',n)}catch(e){}paint();});})();
+</script>
+</body></html>
