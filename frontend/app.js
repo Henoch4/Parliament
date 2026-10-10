@@ -161,6 +161,7 @@ const PARLIAMENT_ABI = [
 const ERC20_ABI = [
   'function allowance(address,address) view returns (uint256)',
   'function approve(address,uint256) returns (bool)',
+  'function deposit() payable',
   'function balanceOf(address) view returns (uint256)',
 ];
 const fmtBot = (v) => {
@@ -285,6 +286,18 @@ async function requireWallet() {
   return !!(ok && signer && account);
 }
 
+async function ensureWbot(amount) {
+  const t = new ethers.Contract(WBOT, ERC20_ABI, signer);
+  const bal = await t.balanceOf(account);
+  if (bal >= amount) return;
+  const shortfall = amount - bal;
+  const native = await signer.provider.getBalance(account);
+  const gasCost = ethers.parseEther('0.005');
+  if (native < shortfall + gasCost) throw new Error('Need ' + ethers.formatEther(shortfall + gasCost - native).slice(0, 7) + ' more BOT (wrap + gas)');
+  const tx = await t.deposit({ value: shortfall, ...GAS });
+  await tx.wait();
+}
+
 async function approveIfNeeded(amount) {
   const t = new ethers.Contract(WBOT, ERC20_ABI, signer);
   const a = await t.allowance(account, CONTRACT_ADDR);
@@ -348,6 +361,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const amt = parseAmt($('treasuryAmt'));
     if (!amt) { guard(depBtn, 'Enter amount'); return; }
     runTx(depBtn, 'Deposited', async () => {
+      await ensureWbot(amt);
       await approveIfNeeded(amt);
       return parlRead().connect(signer).depositTreasury(amt, GAS);
     });
