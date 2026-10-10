@@ -205,15 +205,16 @@ async function refresh() {
   }
   try {
     const count = Number(await c.proposalCount());
-    proposals = [];
+    const list = [];
     for (let i = 0; i < count; i++) {
       const p = await c.getProposal(i);
-      proposals.push({
+      list.push({
         id: i, proposer: p[0], description: p[1], target: p[2], value: p[3],
         forVotes: p[5], againstVotes: p[6], startTime: Number(p[7]),
         executed: p[9], canceled: p[10],
       });
     }
+    proposals = list;
     if (sel >= proposals.length) sel = Math.max(0, proposals.length - 1);
     renderList();
     // treasury: real token balance
