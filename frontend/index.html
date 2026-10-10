@@ -140,6 +140,22 @@ function contracts() {
   return new ethers.Contract(c.parl, PARL_ABI, rpc());
 }
 const short = (a) => (a ? a.slice(0, 6) + '…' + a.slice(-4) : '—');
+
+function getProvider() {
+  try {
+    if (typeof appkit !== 'undefined' && appkit && typeof appkit.getWalletProvider === 'function') {
+      const p = appkit.getWalletProvider('eip155') || appkit.getWalletProvider();
+      if (p) return p;
+    }
+  } catch (e) {}
+  return null;
+}
+async function getSigner() {
+  const wp = getProvider();
+  if (!wp) { try { appkit.open(); } catch (e) {} return null; }
+  return new ethers.BrowserProvider(wp).getSigner();
+}
+
 const esc = (s) => { const d = document.createElement('div'); d.textContent = s; return d.innerHTML; };
 
 function initAppKit() {
@@ -257,7 +273,7 @@ if ($("#list")) $("#list").addEventListener("click", async (e) => {
   if (!account) { appkit.open(); return; }
   try {
     const c = CHAINS[currentChainId];
-    const s = await appkit.getSigner();
+    const s = await getSigner(); if (!s) return;;
     const p = new ethers.Contract(c.parl, PARL_ABI, s);
     if (b.dataset.v === "x") {
       await (await p.executeProposal(sel, GAS)).wait();
@@ -281,7 +297,7 @@ if (tb) tb.addEventListener("click", async () => {
   if (!account) { appkit.open(); return; }
   try {
     const c = CHAINS[currentChainId];
-    const s = await appkit.getSigner();
+    const s = await getSigner(); if (!s) return;;
     const p = new ethers.Contract(c.parl, PARL_ABI, s);
     await (await p.createProposal(desc, target, value, "0x", GAS)).wait();
     $("#pd").value = $("#pt").value = $("#pv").value = "";
@@ -298,7 +314,7 @@ if (db) db.addEventListener("click", async () => {
   if (!account) { appkit.open(); return; }
   try {
     const c = CHAINS[currentChainId];
-    const s = await appkit.getSigner();
+    const s = await getSigner(); if (!s) return;;
     const me = await s.getAddress();
     const p = new ethers.Contract(c.parl, PARL_ABI, s);
     const tt = await p.treasuryToken();
